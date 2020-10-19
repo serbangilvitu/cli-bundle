@@ -14,7 +14,7 @@ fi
 
 if [[ "${DISTRIBUTION}" == 'debian' ]]; then
   apt update
-  apt -y install curl git unzip
+  apt -y install curl gettext-base git unzip
 fi
 
 # AWS CLI
