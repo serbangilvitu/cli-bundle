@@ -14,16 +14,17 @@ fi
 
 if [[ "${DISTRIBUTION}" == 'debian' ]]; then
   apt update
-  apt -y install curl gettext-base git unzip
+  apt -y install curl gettext-base git unzip vim
 fi
 
 # AWS CLI
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+curl -so "awscliv2.zip" "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" 
 unzip awscliv2.zip
 ./aws/install
 
 # kubectl
-curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+curl -sLO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x kubectl
 mv kubectl /usr/local/bin
 
 # Helm
@@ -31,9 +32,9 @@ curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bas
 
 # Terraform
 export TERRAFORM_LATEST_STABLE=$(curl -sL  https://releases.hashicorp.com/terraform| grep href| grep terraform| egrep -v "(alpha|beta)" | head -1| cut -f3 -d '/')
-curl -L -o terraform.zip https://releases.hashicorp.com/terraform/${TERRAFORM_LATEST_STABLE}/terraform_${TERRAFORM_LATEST_STABLE}_linux_amd64.zip
+curl -sL -o terraform.zip https://releases.hashicorp.com/terraform/${TERRAFORM_LATEST_STABLE}/terraform_${TERRAFORM_LATEST_STABLE}_linux_amd64.zip
 unzip terraform.zip
 mv terraform /usr/local/bin
 
-# Cleanup archives
+# Cleanup
 rm *.zip
