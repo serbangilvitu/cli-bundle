@@ -1,4 +1,4 @@
-# /bin/bash
+#! /bin/bash
 set -euo pipefail
 pushd /tmp
 source /etc/os-release
